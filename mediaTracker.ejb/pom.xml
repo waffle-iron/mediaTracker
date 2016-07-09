@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>de.fabianbloss.mediaTracker</groupId>
@@ -15,6 +14,18 @@
 			<artifactId>mediaTracker.data_access</artifactId>
 			<version>${MEDIATRACKER.VERSION}</version>
 		</dependency>
+		<dependency>
+			<groupId>de.fabianbloss.mediaTracker</groupId>
+			<artifactId>mediaTracker.testCategory</artifactId>
+			<version>0.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.dozer</groupId>
+			<artifactId>dozer</artifactId>
+			<version>5.5.1</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

@@ -5,19 +5,5 @@
 		<artifactId>mediaTracker</artifactId>
 		<version>${MEDIATRACKER.VERSION}</version>
 	</parent>
-	<artifactId>mediaTracker.common</artifactId>
-
-	<dependencies>
-		<dependency>
-			<groupId>de.fabianbloss.mediaTracker</groupId>
-			<artifactId>mediaTracker.testCategory</artifactId>
-			<version>0.1</version>
-		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>2.7.5</version>
-		</dependency>
-
-	</dependencies>
+	<artifactId>mediaTracker.testCategory</artifactId>
 </project>

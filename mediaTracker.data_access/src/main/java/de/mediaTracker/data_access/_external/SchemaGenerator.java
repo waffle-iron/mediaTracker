@@ -12,7 +12,7 @@ public class SchemaGenerator
 	private static final Class<PersistenceProvider> PERSISTENCE_PROVIDER = PersistenceProvider.class;
 
 	private static final String PERSISTENCE_UNIT = "SERIENTRACKER_MANUAL";
-	
+
 	public static void main(String[] args)
 	{
 		Map<String, Class<PersistenceProvider>> map = new HashMap<>();
