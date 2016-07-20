@@ -14,9 +14,10 @@ import java.util.List;
 
 import org.junit.Test;
 
-import de.mediaTracker.common.enum_.UserRole;
+import de.mediaTracker.common.to.base.RoleTO;
 import de.mediaTracker.common.to.base.UserTO;
 import de.mediaTracker.data_access.dao.base.UserDAO;
+import de.mediaTracker.data_access.entity.base.RoleEntity;
 import de.mediaTracker.data_access.entity.base.UserEntity;
 import de.mediaTracker.ejb.bo.base.UserBO;
 
@@ -29,12 +30,12 @@ public class UserBOTest
 	private final static long USER_ID = 1;
 	private final static String USERNAME = "Fabian";
 	private final static String PASSWORD = "123";
-	private final static UserRole USER_ROLE = UserRole.USER;
+	private final static String USER_ROLE = "Admin";
 
 	private final static long USER_ID2 = 2;
 	private final static String USERNAME2 = "Katharina";
 	private final static String PASSWORD2 = "456";
-	private final static UserRole USER_ROLE2 = UserRole.GUEST;
+	private final static String USER_ROLE2 = "User";
 
 	@Test
 	public void testGetUser()
@@ -47,7 +48,8 @@ public class UserBOTest
 		assertThat(userTO.getId(), is(USER_ID));
 		assertThat(userTO.getUserName(), is(USERNAME));
 		assertThat(userTO.getPassword(), is(PASSWORD));
-		assertThat(userTO.getUserRole(), is(USER_ROLE));
+		assertThat(userTO.getRoles(), hasSize(1));
+		assertThat(userTO.getRoles().get(0).getRoleName(), is(USER_ROLE));
 	}
 
 	@Test
@@ -55,13 +57,14 @@ public class UserBOTest
 	{
 		when(userDAO.save(any(UserEntity.class))).thenReturn(createUserEntity(USER_ID, USERNAME, PASSWORD, USER_ROLE));
 
-		UserTO result = userBO.saveUser(createUserTO(null, USERNAME, PASSWORD, USER_ROLE));
+		UserTO userTO = userBO.saveUser(createUserTO(null, USERNAME, PASSWORD, USER_ROLE));
 
-		assertThat(result, is(notNullValue()));
-		assertThat(result.getId(), is(USER_ID));
-		assertThat(result.getUserName(), is(USERNAME));
-		assertThat(result.getPassword(), is(PASSWORD));
-		assertThat(result.getUserRole(), is(USER_ROLE));
+		assertThat(userTO, is(notNullValue()));
+		assertThat(userTO.getId(), is(USER_ID));
+		assertThat(userTO.getUserName(), is(USERNAME));
+		assertThat(userTO.getPassword(), is(PASSWORD));
+		assertThat(userTO.getRoles(), hasSize(1));
+		assertThat(userTO.getRoles().get(0).getRoleName(), is(USER_ROLE));
 	}
 
 	@Test
@@ -84,13 +87,15 @@ public class UserBOTest
 			{
 				assertThat(userTO.getUserName(), is(USERNAME));
 				assertThat(userTO.getPassword(), is(PASSWORD));
-				assertThat(userTO.getUserRole(), is(USER_ROLE));
+				assertThat(userTO.getRoles(), hasSize(1));
+				assertThat(userTO.getRoles().get(0).getRoleName(), is(USER_ROLE));
 			}
 			else if (USER_ID2 == userTO.getId())
 			{
 				assertThat(userTO.getUserName(), is(USERNAME2));
 				assertThat(userTO.getPassword(), is(PASSWORD2));
-				assertThat(userTO.getUserRole(), is(USER_ROLE2));
+				assertThat(userTO.getRoles(), hasSize(1));
+				assertThat(userTO.getRoles().get(0).getRoleName(), is(USER_ROLE2));
 			}
 			else
 			{
@@ -99,25 +104,36 @@ public class UserBOTest
 		}
 	}
 
-	private UserEntity createUserEntity(Long id, String userName, String password, UserRole role)
+	private UserEntity createUserEntity(Long id, String userName, String password, String roleName)
 	{
+		RoleEntity role = new RoleEntity();
+		role.setRoleName(roleName);
+
+		List<RoleEntity> roles = new ArrayList<>();
+		roles.add(role);
+
 		UserEntity user = new UserEntity();
 		user.setId(id);
 		user.setUserName(userName);
 		user.setPassword(password);
-		user.setUserRole(role);
+		user.setRoles(roles);
 
 		return user;
 	}
 
-	private UserTO createUserTO(Long id, String userName, String password, UserRole role)
+	private UserTO createUserTO(Long id, String userName, String password, String roleName)
 	{
+		RoleTO role = new RoleTO();
+		role.setRoleName(roleName);
+
+		List<RoleTO> roles = new ArrayList<>();
+		roles.add(role);
+
 		UserTO user = new UserTO();
 		user.setId(id);
 		user.setUserName(userName);
 		user.setPassword(password);
-		user.setUserRole(role);
-
+		user.setRoles(roles);
 		return user;
 	}
 

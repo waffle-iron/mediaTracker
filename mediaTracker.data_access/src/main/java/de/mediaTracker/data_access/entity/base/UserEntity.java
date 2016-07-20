@@ -1,14 +1,17 @@
 package de.mediaTracker.data_access.entity.base;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-import de.mediaTracker.common.enum_.UserRole;
 import de.mediaTracker.data_access.entity.api.AbstractEntity;
 
 /**
@@ -31,8 +34,10 @@ public class UserEntity extends AbstractEntity implements Serializable
 	@Column(name = "PASSWORD", length = 256, nullable = false)
 	private String password;
 
-	@Column(name = "USERROLE", length = 1, nullable = true)
-	private UserRole userRole;
+	@ManyToMany
+	@JoinTable(name = "USER_ROLE", joinColumns = { @JoinColumn(name = "USER_ID") }, inverseJoinColumns = {
+			@JoinColumn(name = "ROLE_ID") })
+	private List<RoleEntity> roles;
 
 	public String getUserName()
 	{
@@ -54,13 +59,13 @@ public class UserEntity extends AbstractEntity implements Serializable
 		this.password = password;
 	}
 
-	public UserRole getUserRole()
+	public List<RoleEntity> getRoles()
 	{
-		return userRole;
+		return roles;
 	}
 
-	public void setUserRole(UserRole userRole)
+	public void setRoles(List<RoleEntity> roles)
 	{
-		this.userRole = userRole;
+		this.roles = roles;
 	}
 }

@@ -1,13 +1,14 @@
 package de.mediaTracker.common.to.base;
 
-import de.mediaTracker.common.enum_.UserRole;
+import java.security.Principal;
+import java.util.List;
 
-public class UserTO extends AbstractTO
+public class UserTO extends AbstractTO implements Principal
 {
 
 	private String userName;
 	private String password;
-	private UserRole userRole;
+	private List<RoleTO> roles;
 
 	public String getUserName()
 	{
@@ -29,13 +30,19 @@ public class UserTO extends AbstractTO
 		this.password = password;
 	}
 
-	public UserRole getUserRole()
+	public List<RoleTO> getRoles()
 	{
-		return userRole;
+		return roles;
 	}
 
-	public void setUserRole(UserRole userRole)
+	public void setRoles(List<RoleTO> roles)
 	{
-		this.userRole = userRole;
+		this.roles = roles;
+	}
+
+	@Override
+	public String getName()
+	{
+		return userName;
 	}
 }
